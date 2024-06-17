@@ -35,7 +35,7 @@ const ViewMap = ({ selectedYear }) => {
     // Initialize a geoJSON layer
     const geojsonLayer = new GeoJSONLayer({
       url: url,
-      title: "Toronto Crime",
+      title: "Toronto Shootings",
       copyright: "Toronto Police",
       popupTemplate: template,
       renderer: renderer,

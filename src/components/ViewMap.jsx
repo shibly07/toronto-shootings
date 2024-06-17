@@ -7,12 +7,12 @@ import Search from "@arcgis/core/widgets/Search.js";
 // import Legend from "@arcgis/core/widgets/Legend.js";
 
 const url =
-  "https://services.arcgis.com/S9th0jAJ7bqgIRjw/arcgis/rest/services/Major_Crime_Indicators_Open_Data/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson";
+  "https://services.arcgis.com/S9th0jAJ7bqgIRjw/arcgis/rest/services/Shooting_and_Firearm_Discharges_Open_Data/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson";
 
 const template = {
   title: "Crime Info",
   content:
-    '<p style="padding-left:1rem"><b>Report Date: </b>{REPORT_MONTH}, {REPORT_YEAR}<br/><b>Premises Type: </b>{PREMISES_TYPE}<br/><b>Location Type: </b>{LOCATION_TYPE}<br/><b>Neighborhood: </b>{NEIGHBOURHOOD_158}<br/><b>Offense Category: </b>{MCI_CATEGORY}<br/><b>Offense: </b>{OFFENCE}</p>',
+    '<p style="padding-left:1rem"><b>Report Date: </b>{OCC_MONTH}, {OCC_YEAR}<br/><b>Time of incident: </b>{OCC_TIME_RANGE}<br/><b>Neighborhood: </b>{NEIGHBOURHOOD_158}<br/><b>Injured: </b>{INJURIES}<br/><b>Dead: </b>{DEATH}</p>',
 };
 
 const renderer = {
@@ -24,10 +24,9 @@ const renderer = {
       color: "white",
     },
   },
-  field: "MCI_CATEGORY",
 };
 
-const ViewMap = () => {
+const ViewMap = ({ selectedYear }) => {
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -40,7 +39,7 @@ const ViewMap = () => {
       copyright: "Toronto Police",
       popupTemplate: template,
       renderer: renderer,
-      outFields: ["MCI_CATEGORY"],
+      definitionExpression: `OCC_YEAR = ${selectedYear}`,
     });
 
     // Select a hybrid(Satellite view with road names) and add the geoJSON layer
@@ -51,7 +50,7 @@ const ViewMap = () => {
       map,
       container: mapRef.current,
       center: [-79.403523, 43.683188],
-      zoom: 14,
+      zoom: 12,
     });
 
     view.when(() => {
@@ -76,7 +75,7 @@ const ViewMap = () => {
     });
 
     return () => view && view.destroy();
-  }, []);
+  }, [selectedYear]);
 
   return <div style={{ width: "100vw", height: "100vh" }} ref={mapRef}></div>;
 };

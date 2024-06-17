@@ -16,8 +16,8 @@ const template = {
 };
 
 const renderer = {
-  type: "unique-value",
-  defaultSymbol: {
+  type: "simple",
+  symbol: {
     type: "simple-marker",
     color: "orange",
     outline: {
@@ -25,40 +25,6 @@ const renderer = {
     },
   },
   field: "MCI_CATEGORY",
-  uniqueValueInfos: [
-    {
-      // All features with value of "North" will be blue
-      value: "asdasd",
-      symbol: {
-        type: "simple-fill", // autocasts as new SimpleFillSymbol()
-        color: "blue",
-      },
-    },
-    {
-      // All features with value of "East" will be green
-      value: "East",
-      symbol: {
-        type: "simple-fill", // autocasts as new SimpleFillSymbol()
-        color: "green",
-      },
-    },
-    {
-      // All features with value of "South" will be red
-      value: "South",
-      symbol: {
-        type: "simple-fill", // autocasts as new SimpleFillSymbol()
-        color: "red",
-      },
-    },
-    {
-      // All features with value of "West" will be yellow
-      value: "West",
-      symbol: {
-        type: "simple-fill", // autocasts as new SimpleFillSymbol()
-        color: "yellow",
-      },
-    },
-  ],
 };
 
 const ViewMap = () => {

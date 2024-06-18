@@ -1,6 +1,6 @@
-# Toronto Crime
+# Toronto Shootings
 
-Toronto crime is a website that shows shootings reported in toronto between 2004 - 2012.
+Toronto shootings is a website that shows shootings reported in Toronto between 2004 - 2012.
 
 ## Screen Shot
 
@@ -8,14 +8,14 @@ Toronto crime is a website that shows shootings reported in toronto between 2004
 
 ## Links
 
-- Live Site URL : [Toronto Crime](https://torontoshootings.vercel.app/)
+- Live Site URL : [Toronto Shootings](https://torontoshootings.vercel.app/)
 
 ## Features
 
-- Drag the map with zoom in and out functionality.
+- Drag the map with zoom-in and out functionality.
 - Shows the location of the crime on the map with a location pin icon.
 - Search addresses to go to the specific location easily.
-- View details of the location and the crime by clicking the location pin icon.
+- View the details of the location and crime by clicking the location pin icon.
 - Show shootings by selected year
 
 ## Tech

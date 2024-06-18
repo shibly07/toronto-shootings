@@ -20,7 +20,7 @@ Toronto shootings is a website that shows shootings reported in Toronto between 
 
 ## Tech
 
-Toronto Crime ws created by using the libraries and datasets:
+Toronto Crime was created by using the libraries and datasets:
 
 - [Vite / React](https://vitejs.dev/) - Framework for web design using javaScript.
 - [ArcGIS Maps SDK for JavaScript](https://developers.arcgis.com/documentation/mapping-apis-and-services/) - ArcGis library for maps.

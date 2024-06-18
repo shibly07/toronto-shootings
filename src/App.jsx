@@ -15,7 +15,6 @@ const years = [
 
 function App() {
   const [selectedYear, setSelectedYear] = useState(years[0].year);
-
   return (
     <div>
       <div
@@ -45,13 +44,12 @@ function App() {
           }}
         >
           <label htmlFor="year">Select a year:</label>
-          <select name="year" id="year" style={{ padding: 5 }}>
+          <select
+            style={{ padding: 5 }}
+            onChange={(e) => setSelectedYear(e.target.value)}
+          >
             {years.map((item) => (
-              <option
-                key={item.year}
-                value={item.year}
-                onClick={() => setSelectedYear(item.year)}
-              >
+              <option key={item.year} value={item.year}>
                 {item.year}
               </option>
             ))}

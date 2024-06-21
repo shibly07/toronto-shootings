@@ -73,12 +73,12 @@ const ViewMap = ({ selectedYear }) => {
       const sizeParams = {
         layer: geojsonLayer,
         view: view,
-        valueExpression: "($feature.INJURIES*10)",
-        legendOptions: {
-          title: "% population living in poverty",
-        },
+        valueExpression: "($feature.INJURIES)",
+        // legendOptions: {
+        //   title: "% population living in poverty",
+        // },
         minValue: 0,
-        maxValue: 20,
+        maxValue: 6,
         sizeOptimizationEnabled: true,
         // sizeScheme: { color: color },
       };

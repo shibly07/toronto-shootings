@@ -4,6 +4,7 @@ import GeoJSONLayer from "@arcgis/core/layers/GeoJSONLayer.js";
 import MapView from "@arcgis/core/views/MapView";
 import Map from "@arcgis/core/Map";
 import Search from "@arcgis/core/widgets/Search.js";
+import * as sizeRendererCreator from "@arcgis/core/smartMapping/renderers/size.js";
 // import Legend from "@arcgis/core/widgets/Legend.js";
 
 const url =
@@ -16,12 +17,14 @@ const template = {
 };
 
 const renderer = {
-  type: "simple",
+  type: "simple", // autocasts as new SimpleRenderer()
   symbol: {
-    type: "simple-marker",
-    color: "orange",
+    type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+    color: [0, 0, 0, 0],
     outline: {
-      color: "white",
+      // autocasts as new SimpleLineSymbol()
+      color: "#71de6e",
+      width: 1,
     },
   },
 };
@@ -43,9 +46,12 @@ const ViewMap = ({ selectedYear }) => {
     });
 
     // Select a hybrid(Satellite view with road names) and add the geoJSON layer
-    const map = new Map({ basemap: "hybrid", layers: [geojsonLayer] });
+    const map = new Map({
+      basemap: "hybrid",
+      layers: [geojsonLayer],
+    });
 
-    // Show the map
+    // Select div to show map with pre selected coordinates
     const view = new MapView({
       map,
       container: mapRef.current,
@@ -63,6 +69,46 @@ const ViewMap = ({ selectedYear }) => {
         position: "top-left",
         index: 2,
       });
+
+      const sizeParams = {
+        layer: geojsonLayer,
+        view: view,
+        valueExpression: "($feature.INJURIES*10)",
+        legendOptions: {
+          title: "% population living in poverty",
+        },
+        minValue: 0,
+        maxValue: 20,
+        sizeOptimizationEnabled: true,
+        // sizeScheme: { color: color },
+      };
+
+      // Render different sized marker on the map
+      let rendererResult = null;
+      sizeRendererCreator
+        .createContinuousRenderer(sizeParams)
+        .then((response) => {
+          // Set the output renderer on the layer.
+          rendererResult = response;
+          geojsonLayer.renderer = rendererResult.renderer;
+          rendererResult.renderer.classBreakInfos[0].symbol.color = "#22A7F0";
+          rendererResult.renderer.classBreakInfos[0].symbol.outline.color =
+            "#E31A1C";
+          rendererResult.renderer.classBreakInfos[0].symbol.outline.width = 2;
+        });
+
+      geojsonLayer.featureReduction.fields = [
+        {
+          name: "INJURIES",
+          statisticType: "count",
+          onStatisticField: "INJURIES",
+          onStatisticExpression: {
+            expression: "$feature.INJURIES",
+            title: "population density",
+            returnType: "number",
+          },
+        },
+      ];
 
       // Legend is work in progress
       // Add a legend to the view

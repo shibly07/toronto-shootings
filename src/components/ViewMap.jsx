@@ -31,6 +31,7 @@ const renderer = {
 
 const ViewMap = ({ selectedYear }) => {
   const mapRef = useRef(null);
+  const geojsonLayerRef = useRef(null);
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -44,6 +45,8 @@ const ViewMap = ({ selectedYear }) => {
       renderer: renderer,
       definitionExpression: `OCC_YEAR = ${selectedYear}`,
     });
+
+    geojsonLayerRef.current = geojsonLayer;
 
     // Select a hybrid(Satellite view with road names) and add the geoJSON layer
     const map = new Map({
@@ -121,6 +124,14 @@ const ViewMap = ({ selectedYear }) => {
     });
 
     return () => view && view.destroy();
+  }, []);
+
+  // Only update year filter on prop change
+  useEffect(() => {
+    if (geojsonLayerRef.current) {
+      geojsonLayerRef.current.definitionExpression = `OCC_YEAR = ${selectedYear}`;
+      geojsonLayerRef.current.refresh(); // triggers data reload
+    }
   }, [selectedYear]);
 
   return <div style={{ width: "100vw", height: "100vh" }} ref={mapRef}></div>;
